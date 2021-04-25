@@ -24,4 +24,23 @@ router.get('/', (req, res) =>{
         });
 });
 
+router.post('/',async(req, res)=>{
+    const {codigo, nombre, precio, cantidad, estado} = req.body;
+    var newLink = [
+        [codigo,
+        nombre,
+        precio,
+        cantidad,
+        estado]
+    ];
+    var sql = ('INSERT INTO Producto(codigo, nombre, precio, cantidad, estado) VALUES ?');
+    await mysqlConnection.query(sql,[newLink],function (err, result){
+        if(err){
+            //(res.json(rows);
+            throw(err);
+        }
+        console.log(result.affectedRows);
+    });
+});
+
 module.exports = router;
